@@ -262,13 +262,11 @@ Los niveles de severidad pueden ser:
 11. Cada crédito genera varias cuotas.
 12. Cada cuota pertenece a un solo crédito.
 13. Una cuota puede ser pagada total o parcialmente.
-14. Un pago pertenece a una cuota.
+14. Un pago pertenece a una/mas cuotas.
 15. Una cuota puede tener varios pagos.
 16. Una cuota se considera vencida si no fue pagada hasta su fecha de vencimiento.
 17. Los días de atraso se calculan comparando la fecha de vencimiento con la fecha de pago o con la fecha actual si aún no ha sido pagada.
 18. El score de riesgo se calcula en cada solicitud.
-19. Un cliente puede tener varias alertas de riesgo.
-20. Una alerta puede estar asociada a un cliente y a un crédito.
 
 ---
 
