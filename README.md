@@ -59,6 +59,18 @@ Para las **personas jurídicas**, se debe registrar:
 - Dirección fiscal.
 
 Un cliente puede realizar varias solicitudes de crédito y puede tener uno o más créditos activos.
+El banco registra las cuentas bancarias asociadas a sus clientes, las cuales pueden ser utilizadas para el desembolso de créditos y el pago de cuotas.
+
+Un cliente puede tener una o varias cuentas bancarias activas dentro del banco.
+
+Para cada cuenta bancaria se debe registrar:
+
+Número de cuenta.
+Tipo de cuenta.
+Moneda.
+Fecha de apertura.
+Saldo actual.
+Estado de la cuenta.
 
 ---
 
