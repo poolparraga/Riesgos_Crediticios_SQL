@@ -186,7 +186,7 @@ CREATE TABLE creditos (
 
     CONSTRAINT fk_creditos_solicitud    FOREIGN KEY (id_solicitud)         REFERENCES solicitudes(id),
     CONSTRAINT fk_creditos_producto     FOREIGN KEY (id_producto)          REFERENCES productos_crediticios(id),
-    CONSTRAINT fk_creditos_cuenta       FOREIGN KEY (id_cuenta_desembolso) REFERENCES cuentas(id),
+    CONSTRAINT fk_creditos_cuenta       FOREIGN KEY (id_cuenta_desembolso) REFERENCES cuentas_bancarias(id),
     CONSTRAINT chk_creditos_monto       CHECK (monto_aprobado > 0),
     CONSTRAINT chk_creditos_plazo       CHECK (plazo_meses > 0),
     CONSTRAINT chk_creditos_fechas      CHECK (fecha_vencimiento > fecha_inicio)
@@ -314,13 +314,13 @@ ALTER TABLE personas_juridicas
 ADD CHECK (ingresos_anuales >= 0);
 
 --- cuentas
-ALTER TABLE cuentas
+ALTER TABLE cuentas_bancarias
 ADD CHECK (moneda IN ('PEN', 'USD', 'EUR'));
 
-ALTER TABLE cuentas
+ALTER TABLE cuentas_bancarias
 ADD CHECK (saldo_actual >= 0);
 
-ALTER TABLE cuentas
+ALTER TABLE cuentas_bancarias
 ADD CHECK (estado IN ('activa', 'bloqueada', 'cerrada', 'embargada'));
 
 --- productos_crediticios
@@ -395,23 +395,3 @@ ADD CHECK (estado IN ('activa', 'gestionada', 'cerrada'));
 
 ALTER TABLE alertas_mora
 ADD CHECK (dias_atraso >= 0);
-
---- ============================================================
----  DATOS INICIALES
---- ============================================================
-
-INSERT INTO medios_pago (nombre, descripcion, estado) VALUES
-    ('ventanilla',          'Pago presencial en agencia',           'activo'),
-    ('transferencia',       'Transferencia bancaria interbancaria',  'activo'),
-    ('app_movil',           'Aplicativo movil FinanRisk',           'activo'),
-    ('agente_bancario',     'Red de agentes corresponsales',        'activo'),
-    ('bim',                 'Billetera Movil BCRP',                 'activo'),
-    ('debito_automatico',   'Cargo automatico a cuenta asociada',   'activo'),
-    ('yape',                'Pago via Yape',                        'activo'),
-    ('plin',                'Pago via Plin',                        'activo');
-
-INSERT INTO tipos_cuenta (nombre, descripcion) VALUES
-    ('ahorros',             'Cuenta de ahorros en soles o dolares'),
-    ('cuenta_corriente',    'Cuenta corriente para empresas y personas'),
-    ('plazo_fijo',          'Deposito a plazo fijo con tasa pactada'),
-    ('cts',                 'Compensacion por tiempo de servicios');
