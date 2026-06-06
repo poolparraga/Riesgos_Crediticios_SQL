@@ -224,3 +224,25 @@ ORDER BY cantidad_alertas_mora DESC, score_mas_bajo ASC;
 
 --Análisis de recuperación de pagos por crédito--
 --Construir una consulta que muestre por cada crédito: número de crédito, monto aprobado, total programado en cuotas, total pagado, saldo pendiente, porcentaje recuperado y estado del crédito.--
+SELECT
+    cr.nro_credito,
+    cr.monto_aprobado,
+    cr.estado,
+    COALESCE(SUM(DISTINCT cc.total_cuota), 0) AS total_programado,
+    COALESCE(SUM(dcp.monto_pagado), 0) AS total_pagado,
+    COALESCE(SUM(DISTINCT cc.saldo_pendiente), 0) AS saldo_pendiente,
+    CAST(
+        COALESCE(SUM(dcp.monto_pagado), 0) * 100.0 /
+        NULLIF(COALESCE(SUM(DISTINCT cc.total_cuota), 0), 0)
+        AS DECIMAL(10,2)
+    ) AS porcentaje_recuperado
+FROM creditos cr
+LEFT JOIN cronograma_cuotas cc
+    ON cc.id_credito = cr.id
+LEFT JOIN detalle_cuotas_pagos dcp
+    ON dcp.id_cuota = cc.id
+GROUP BY
+    cr.nro_credito,
+    cr.monto_aprobado,
+    cr.estado
+ORDER BY porcentaje_recuperado DESC;
